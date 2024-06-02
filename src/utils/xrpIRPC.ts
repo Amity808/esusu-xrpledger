@@ -14,13 +14,15 @@ export default class XrplRPC {
             const accounts = await this.provider.request<never, string[]>({
                 method: "xrpl_getAccounts",
             });
+            console.log(accounts, "accounts");
+            
             if (accounts) {
                 const accInfo = await this.provider.request({
                     method: "account_info",
                     params: [
                         {
                             account: accounts[0],
-                            strict: true,
+                            strict: false,
                             ledger_index: "current",
               queue: true,
                         },
@@ -37,6 +39,34 @@ export default class XrplRPC {
         }
 
     }
+
+    getWalletSeed = async (): Promise<any> => {
+        try {
+          const accounts = await this.provider.request<never, string[]>({
+            method: "xrpl_getAccounts",
+          });
+    
+          if (accounts) {
+            const accInfo = (await this.provider.request({
+              method: "account_info",
+              params: [
+                {
+                  account: accounts[0],
+                  strict: false,
+                  ledger_index: "current",
+                  queue: true,
+                },
+              ],
+            })) as Record<string, Record<string, string>>;
+            return accInfo;
+          } else {
+            return "No accounts found, please report this issue.";
+          }
+        } catch (error) {
+          console.error("Error", error);
+          return error;
+        }
+      }
 
     getBalance = async (): Promise<any> => {
         try {
@@ -96,11 +126,35 @@ export default class XrplRPC {
 
     fundAccount = async (): Promise<any> => {
         try {
-            const client = new Client("wss://s.altnet.rippletest.net:51233");
-            const wallet = this.getAccountAddress();
-            const walletSeed = Wallet.fromSeed("")
-            const result = await client.fundWallet();
-            
+            // const client = new Client("wss://s.altnet.rippletest.net:51233");
+            // const wallet = await this.getAccountAddress();
+            // const walletSeed = Wallet.fromSeed(wallet);
+            // const result = await client.fundWallet();
+            // console.log(result);
+            // console.log(walletSeed, "walletseed")
+            // return walletSeed;
+            const accounts = await this.provider.request<string[], never>({
+                method: "xrpl_getAccounts",
+              });
+
+            //   const seed = accounts[0]?;
+        
+              if (accounts) {
+                const accInfo = (await this.provider.request({
+                  method: "account_info",
+                  params: [
+                    {
+                      account: accounts[0],
+                      strict: true,
+                      ledger_index: "current",
+                      queue: true,
+                    },
+                  ],
+                })) as Record<string, Record<string, string>>;
+                return accInfo?.account;
+              } else {
+                return "No accounts found, please report this issue.";
+              }
         } catch (error) {
             
         }

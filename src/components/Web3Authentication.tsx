@@ -1,6 +1,7 @@
 'use client'
 import { XrplPrivateKeyProvider } from "@web3auth/xrpl-provider"
 import { Web3Auth } from "@web3auth/modal";
+import { getXrplChainConfig } from "@web3auth/base";
 import { CHAIN_NAMESPACES, UX_MODE, WEB3AUTH_NETWORK,IProvider } from "@web3auth/base";
 import RPC from "@/utils/xrpIRPC"
 import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
@@ -19,11 +20,11 @@ const Web3Authentication = () => {
       chainId: "0x2",
       // Avoid using public rpcTarget & wsTarget in production.
       // Use services like Infura, Quicknode etc
-      rpcTarget: "https://ripple-node.tor.us",
+      rpcTarget: "https://s.altnet.rippletest.net:51234/",
       wsTarget: "wss://s.altnet.rippletest.net:51233/",
       ticker: "XRP",
       tickerName: "XRPL",
-      displayName: "xrpl mainnet",
+      displayName: "xrpl testnet",
       blockExplorerUrl: "https://devnet.xrpl.org/",
     };
 
@@ -33,11 +34,11 @@ const Web3Authentication = () => {
           try {
             const xrplProvider = new XrplPrivateKeyProvider({
               config: {
-                chainConfig: chainConfig,
+                chainConfig: getXrplChainConfig(0x2),
               },
             });
     
-            console.log(xrplProvider.config);
+            console.log(xrplProvider.config, "xrplProvider.config");
     
             const web3auth = new Web3Auth({
               clientId,
@@ -202,6 +203,16 @@ const Web3Authentication = () => {
         const result = await rpc.getAccountAddress();
         uiConsole(result);
       };
+      const getWalletSeed = async () => {
+        if (!provider) {
+          uiConsole("provider not initialized yet");
+          return;
+        }
+        const rpc = new RPC(provider);
+        const result = await rpc.getWalletSeed();
+        console.log(result, "result: " )
+        uiConsole(result);
+      };
 
       function uiConsole(...args) {
         const el = document.querySelector("#console>p");
@@ -227,6 +238,11 @@ const Web3Authentication = () => {
             <div>
               <button onClick={getAccountAddress} className="card">
                 Address
+              </button>
+            </div>
+            <div>
+              <button onClick={getWalletSeed} className="card">
+                Seed
               </button>
             </div>
             <div>
