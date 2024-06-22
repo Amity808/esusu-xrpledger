@@ -6,6 +6,7 @@ import Navbar from "../../components/Navbar"
 import InitialSavings from '../../components/InitialSavings';
 import Deposit from '../../components/Deposit';
 import type { NextPage } from "next";
+import AuthMiddleware from '~~/middleware/Auth';
 
 
 const TargetSavings: NextPage = () => {
@@ -26,6 +27,8 @@ const TargetSavings: NextPage = () => {
         },
       };
   return (
+    <AuthMiddleware>
+
     <div style={headerStyle} className=' h-screen'>
         <div className=' flex justify-center items-center mt-10'>
             <Navbar />
@@ -33,6 +36,7 @@ const TargetSavings: NextPage = () => {
         </div>
         {/* <Deposit /> */}
     </div>
+    </AuthMiddleware>
   )
 }
 

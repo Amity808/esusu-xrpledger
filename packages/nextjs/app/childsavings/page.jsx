@@ -7,6 +7,7 @@ import ChildSavings from "~~/components/ChildSavings"
 import ChildHistory from "~~/components/ChildHistory"
 import ChildSaveDeposit from '../../components/ChildSaveDeposit';
 import { useAccount } from 'wagmi';
+import AuthMiddleware from '~~/middleware/Auth';
 
 const Childsavings = () => {
     const headerStyle = {
@@ -28,6 +29,8 @@ const Childsavings = () => {
 
       const { address } = useAccount()
   return (
+    <AuthMiddleware>
+
     <div style={headerStyle} className=' h-screen'>
         <div className=' flex justify-center items-center mt-10 flex-col'>
             <Navbar />
@@ -36,6 +39,7 @@ const Childsavings = () => {
         <ChildHistory />
         </div>
          </div>
+    </AuthMiddleware>
   )
 }
 

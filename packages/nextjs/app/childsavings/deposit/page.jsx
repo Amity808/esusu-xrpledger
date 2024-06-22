@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { parseEther } from "viem";
 import { useAccount } from "wagmi";
 import Navbar from "~~/components/Navbar";
+import AuthMiddleware from "~~/middleware/Auth";
 
 const ChildSaveDeposit = () => {
   const [Amount, setAmount] = useState("");
@@ -61,6 +62,8 @@ useEffect(() => {
   return (
     <>
       {/* Dialogo */}
+      <AuthMiddleware>
+
       <Navbar />
 
       <div className=" mt-14">
@@ -80,19 +83,20 @@ useEffect(() => {
                   className=" w-[400px]"
                   placeholders="amount"
                   type="number"
-                />
+                  />
               </div> 
               <button
                 className="text-white p-4 bg-blue-500/60 rounded-lg text-lg font-bold w-[100px]"
                 onClick={initialSave}
                 disabled={isPending}
                 type="submit"
-              >
+                >
                 Save
               </button>
         </form>
       </div>
     </div>
+                </AuthMiddleware>
     </>
   );
 };

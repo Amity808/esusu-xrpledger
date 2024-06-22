@@ -4,6 +4,7 @@ import Navbar from "../../components/Navbar"
 // import Trasactionhistory from "../../components/Trasactionhistory"
 import HistoryCard from '../../components/HistoryCard';
 import AllTxHistory from '../../components/AllTxHistory';
+import AuthMiddleware from '~~/middleware/Auth';
 
 const History = () => {
     const headerStyle = {
@@ -23,11 +24,14 @@ const History = () => {
         },
       };
   return (
+    <AuthMiddleware>
+
     <div style={headerStyle} className=''>
         
         <AllTxHistory />
         <HistoryCard id={1} />
     </div>
+    </AuthMiddleware>
   )
 }
 

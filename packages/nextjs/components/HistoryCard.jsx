@@ -14,8 +14,8 @@ const HistoryCard = ({id}) => {
 
   const { data: fetchData } = useScaffoldReadContract({
     contractName: "Esusu",
-    functionName: "getSavings",
-    args: [id, address]
+    functionName: "_savings",
+    args: [id]
 });
 
 
