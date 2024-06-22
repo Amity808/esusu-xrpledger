@@ -89,12 +89,9 @@ contract Esusu {
         // uint256 getPay = currentTimeStap + _age * 365 * 24 * 60 * 60;
         savings.targetChild = _target;
         savings.childAge =_target;
-        // savings.amount += ;
         savings.childAddress = payable (msg.sender);
         savings.fatherAddress = _father;
-        // savings.canWithdraw = getPay;
         savings.deposited = true;
-        
     }
     function depositForChild(address _childAddress) external payable  {
         ChildSavings storage savings = _childSavings[_childAddress];
@@ -175,8 +172,8 @@ contract Esusu {
     function targetReach(uint256 _savinsLen) public {
         require(msg.sender == _savings[_savinsLen].owner, "You dont have account initial withdraw" );
         Savings storage save = _savings[_savinsLen];
-         require(save.target <= save.savingsAmount, "The target must reach before you can withdraw ");
-        uint256 amount = save.target;
+        require(save.target <= save.savingsAmount, "The target must reach before you can withdraw ");
+        uint256 amount = save.savingsAmount;
 
         (bool sent, ) = payable(save.owner).call{value: amount}("");
         require(sent, "Failed to send Ether");
@@ -209,6 +206,6 @@ contract Esusu {
 
     receive() external payable {}
 
-        fallback() external payable {}
+    fallback() external payable {}
 
 }
