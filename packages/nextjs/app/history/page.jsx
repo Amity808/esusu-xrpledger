@@ -29,7 +29,6 @@ const History = () => {
     <div style={headerStyle} className=''>
         
         <AllTxHistory />
-        <HistoryCard id={1} />
     </div>
     </AuthMiddleware>
   )
