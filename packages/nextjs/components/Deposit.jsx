@@ -18,6 +18,8 @@ const { writeContractAsync, isPending } = useScaffoldWriteContract("Esusu");
     setAmount("");
   };
 
+
+  console.log(id)
  
 
   const initialSave = async (e) => {

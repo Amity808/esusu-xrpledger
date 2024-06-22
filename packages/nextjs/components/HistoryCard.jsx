@@ -7,20 +7,40 @@ import { Address } from "~~/components/scaffold-eth";
 import { useAccount } from 'wagmi';
 import { formatEther } from 'viem';
 import Deposit from "./Deposit"
+import CustomInput from "./ui/CustomeInput";
+import { parseEther } from "viem";
 const HistoryCard = ({id}) => {
 
   const { address } = useAccount()
+  const [Amount, setAmount] = useState("");
   const [historyData, setHistoryData] = useState(null)
 
   const { data: fetchData } = useScaffoldReadContract({
     contractName: "Esusu",
-    functionName: "_savings",
-    args: [id]
+    functionName: "getSavings",
+    args: [id, address]
 });
 
+const handleClear = () => {
+  setAmount("");
+};
 
 const { writeContractAsync, isPending } = useScaffoldWriteContract("Esusu")
 
+const initialSave = async (e) => {
+  e.preventDefault();
+  try {
+    await writeContractAsync({
+      functionName: "depositSave",
+      args: [id],
+      value: parseEther(Amount),
+    });
+    handleClear();
+  } catch (error) {
+    handleClear();
+    console.log(error);
+  }
+};
 
 const handleWithdraw = async () => {
   try {
@@ -47,7 +67,7 @@ const getSavings = useCallback(() => {
     isInitiated: Boolean(fetchData[4]),
     forceWithdraw: fetchData[5],
     inSaving: Boolean(fetchData[6]),
-    SavingsStatus: fetchData[9],
+    SavingsStatus: fetchData[7],
     // nonce: Number(fetchData[10]),
   })
 }, [fetchData]);
@@ -67,7 +87,7 @@ let timeStampNs = historyData?.isTime
   let readableDate = date.toLocaleString()
   console.log("Readable date", readableDate)
 
-  console.log(historyData?.isTime)
+  console.log(historyData?.SavingsStatus, "status")
 
 
 
@@ -98,11 +118,27 @@ if (address !== historyData?.owner) return null;
             { target < currentAmount ? <>
             <p>You have reach your target</p>
             <button onClick={handleWithdraw} className="mt-4 text-sm text-white bg-black rounded-full px-3 py-1">Withdraw</button>
-            </> : <>
-              <p>You have not reach your target</p>
-            <Deposit id={id} />
-            
-            </>}
+            </> : historyData?.SavingsStatus == 2 ? <>
+              You have completed this track
+            </> : <> 
+            <p>You have not reach your target</p>
+            {/* <Deposit id={id} /> */}
+              <div>
+              <CustomInput
+                  onChange={e => setAmount(e.target.value)}
+                  className=" w-[200px]"
+                  placeholders="amount"
+                  type="number"
+                />
+                <button
+                className="text-white p-2 bg-blue-500/60 rounded-lg text-lg font-bold "
+                onClick={initialSave}
+                // disabled={isPending}
+                type="submit"
+              >
+                Deposit
+              </button>
+              </div></>}
           </div>
         </div>
     </div>
