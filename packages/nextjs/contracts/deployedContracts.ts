@@ -446,7 +446,7 @@ const deployedContracts = {
   },
   1440002: {
     Esusu: {
-      address: "0x81B1a760D122E22A6761e303a08676cd916018D6",
+      address: "0x4b436ef58D90f3015688b93926Be17FF876c106E",
       abi: [
         {
           inputs: [],
