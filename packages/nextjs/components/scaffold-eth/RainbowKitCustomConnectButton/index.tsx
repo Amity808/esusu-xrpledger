@@ -17,6 +17,7 @@ import { getBlockExplorerAddressLink } from "~~/utils/scaffold-eth";
  */
 export const RainbowKitCustomConnectButton = () => {
   const networkColor = useNetworkColor();
+  
   const { targetNetwork } = useTargetNetwork();
 
   return (
@@ -57,6 +58,7 @@ export const RainbowKitCustomConnectButton = () => {
                     blockExplorerAddressLink={blockExplorerAddressLink}
                   />
                   <AddressQRCodeModal address={account.address as Address} modalId="qrcode-modal" />
+                  
                 </>
               );
             })()}

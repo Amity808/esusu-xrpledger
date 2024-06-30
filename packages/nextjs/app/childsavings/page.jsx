@@ -8,8 +8,10 @@ import ChildHistory from "~~/components/ChildHistory"
 import ChildSaveDeposit from '../../components/ChildSaveDeposit';
 import { useAccount } from 'wagmi';
 import AuthMiddleware from '~~/middleware/Auth';
+import useProtectedRoute from '~~/hooks/auth/useProtectedRoute';
 
 const Childsavings = () => {
+  useProtectedRoute();
     const headerStyle = {
         backgroundImage: `url(${bg.src})`,
         /* Additional styles can be added here */

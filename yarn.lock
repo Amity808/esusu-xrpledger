@@ -2068,6 +2068,7 @@ __metadata:
     react-copy-to-clipboard: ^5.1.0
     react-dom: ^18.2.0
     react-hot-toast: ^2.4.0
+    react-toastify: ^10.0.5
     tailwindcss: ^3.4.3
     type-fest: ^4.6.0
     typescript: ^5.1.6
@@ -2076,6 +2077,7 @@ __metadata:
     vercel: ^32.4.1
     viem: 2.13.6
     wagmi: 2.9.8
+    xrpl: ^3.1.0
     zustand: ^4.1.2
   languageName: unknown
   linkType: soft
@@ -14782,7 +14784,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xrpl@npm:^3.0.0":
+"xrpl@npm:^3.0.0, xrpl@npm:^3.1.0":
   version: 3.1.0
   resolution: "xrpl@npm:3.1.0"
   dependencies:

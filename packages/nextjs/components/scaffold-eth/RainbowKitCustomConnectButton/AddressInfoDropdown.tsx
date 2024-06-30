@@ -16,7 +16,7 @@ import {
 import { BlockieAvatar, isENS } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 import { getTargetNetworks } from "~~/utils/scaffold-eth";
-
+import { useAuth } from "~~/context/AuthContext";
 const allowedNetworks = getTargetNetworks();
 
 type AddressInfoDropdownProps = {
@@ -34,6 +34,7 @@ export const AddressInfoDropdown = ({
 }: AddressInfoDropdownProps) => {
   const { disconnect } = useDisconnect();
   const checkSumAddress = getAddress(address);
+  const { logout } = useAuth();
 
   const [addressCopied, setAddressCopied] = useState(false);
 
@@ -120,6 +121,7 @@ export const AddressInfoDropdown = ({
                 <ArrowsRightLeftIcon className="h-6 w-4 ml-2 sm:ml-0" /> <span>Switch Network</span>
               </button>
             </li>
+
           ) : null}
           <li className={selectingNetwork ? "hidden" : ""}>
             <button
@@ -129,6 +131,10 @@ export const AddressInfoDropdown = ({
             >
               <ArrowLeftOnRectangleIcon className="h-6 w-4 ml-2 sm:ml-0" /> <span>Disconnect</span>
             </button>
+          </li>
+          <li>
+
+            <button onClick={logout}>Logout</button>
           </li>
         </ul>
       </details>

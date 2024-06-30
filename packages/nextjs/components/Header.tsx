@@ -8,7 +8,7 @@ import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
 import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useOutsideClick } from "~~/hooks/scaffold-eth";
 // import { BlackCreateWalletButton } from "./BlackCreateWalletButton";
-
+import { useAuth } from "~~/context/AuthContext";
 type HeaderMenuLink = {
   label: string;
   href: string;
@@ -41,8 +41,11 @@ export const menuLinks: HeaderMenuLink[] = [
 export const HeaderMenuLinks = () => {
   const pathname = usePathname();
 
+  const { isAuthenticated } = useAuth();
+
   return (
     <>
+    {isAuthenticated ? <>
       {menuLinks.map(({ label, href, icon }) => {
         const isActive = pathname === href;
         return (
@@ -60,6 +63,9 @@ export const HeaderMenuLinks = () => {
           </li>
         );
       })}
+      </> : <>
+          <Link href="/login">Login</Link>
+          </>}
     </>
   );
 };
@@ -70,6 +76,7 @@ export const HeaderMenuLinks = () => {
 export const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const burgerMenuRef = useRef<HTMLDivElement>(null);
+  const { isAuthenticated } = useAuth();
   useOutsideClick(
     burgerMenuRef,
     useCallback(() => setIsDrawerOpen(false), []),
@@ -96,9 +103,12 @@ export const Header = () => {
                 setIsDrawerOpen(false);
               }}
             >
+                
               <HeaderMenuLinks />
+          
             </ul>
           )}
+          
         </div>
         <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
           <div className="flex relative w-10 h-10">
@@ -114,9 +124,14 @@ export const Header = () => {
         </ul>
       </div>
       <div className="navbar-end flex-grow mr-4">
+      {isAuthenticated ? <>
         <RainbowKitCustomConnectButton />
         {/* <BlackCreateWalletButton  /> */}
         <FaucetButton />
+          
+          </> : <>
+          <Link href="/login">Login</Link>
+          </>}
       </div>
     </div>
   );

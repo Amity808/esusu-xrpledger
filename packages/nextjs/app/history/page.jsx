@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import bg from "../../public/homebg.png";
 import Navbar from "../../components/Navbar"
@@ -5,8 +6,10 @@ import Navbar from "../../components/Navbar"
 import HistoryCard from '../../components/HistoryCard';
 import AllTxHistory from '../../components/AllTxHistory';
 import AuthMiddleware from '~~/middleware/Auth';
+import useProtectedRoute from '~~/hooks/auth/useProtectedRoute';
 
 const History = () => {
+  useProtectedRoute();
     const headerStyle = {
         backgroundImage: `url(${bg.src})`,
         /* Additional styles can be added here */

@@ -7,9 +7,10 @@ import InitialSavings from '../../components/InitialSavings';
 import Deposit from '../../components/Deposit';
 import type { NextPage } from "next";
 import AuthMiddleware from '~~/middleware/Auth';
-
+import useProtectedRoute from '~~/hooks/auth/useProtectedRoute';
 
 const TargetSavings: NextPage = () => {
+  useProtectedRoute();
     const headerStyle = {
         backgroundImage: `url(${bg.src})`,
         /* Additional styles can be added here */
@@ -27,7 +28,7 @@ const TargetSavings: NextPage = () => {
         },
       };
   return (
-    <AuthMiddleware>
+    // <AuthMiddleware>
 
     <div style={headerStyle} className=' h-screen'>
         <div className=' flex justify-center items-center mt-10'>
@@ -36,7 +37,7 @@ const TargetSavings: NextPage = () => {
         </div>
         {/* <Deposit /> */}
     </div>
-    </AuthMiddleware>
+  //  </AuthMiddleware>
   )
 }
 

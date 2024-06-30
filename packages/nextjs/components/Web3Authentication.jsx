@@ -8,13 +8,16 @@ import { OpenloginAdapter } from "@web3auth/openlogin-adapter";
 import React, { useEffect, useState} from 'react'
 import Auth from "../middleware/Auth"
 import useWeb3Auth from "~~/hooks/auth/useWeb3Auth";
+import {useAuth} from "~~/context/AuthContext"
 
 const clientId = "BIBFs1xB8C0HKGdr86Iuq_zZuREdOgJ0S8lu6kQwB7wLC9uRaLVm6Kys6iHr9k1OdtTr7ixoPkqEP2qnu8HlxDs";
 const Web3Authentication = () => {
 
-  const { isLoading, setLoggedIn: setlogIN, setProvider: provide, web3auth: web3auths, loggedIn } = useWeb3Auth()
+  const {  setLoggedIn: setlogIN, setProvider: provide, web3auth: web3auths, loggedIn } = useWeb3Auth()
 
-  
+  const { login: loginUser, logout: logoutUser } = useAuth()
+
+  // const { isLoading, startLoading, stopLoading } = useLoading();
     const chainConfig = {
       chainNamespace: CHAIN_NAMESPACES.XRPL,
       chainId: "0x2",
@@ -118,7 +121,7 @@ const Web3Authentication = () => {
               </button>
             </div>
             <div> */}
-              <button onClick={logout} className="card">
+              <button onClick={logoutUser} className="card">
                 Log Out
               </button>
               <div>
@@ -139,7 +142,7 @@ const Web3Authentication = () => {
       );
 
       const unloggedInView = (
-        <button onClick={login} className="card">
+        <button onClick={loginUser} className="card">
           Login
         </button>
       );
@@ -154,8 +157,13 @@ const Web3Authentication = () => {
         Solution by Amityclev Lab Solution
       </h1>
       <p>Secure Your Feature With Your Savings</p>
-
-      <div className="grid">{loggedIn ? loggedInView : unloggedInView}</div>
+      <button onClick={loginUser} className="card">
+          Login
+        </button>
+        <button onClick={logoutUser} className="card">
+                Log Out
+              </button>
+      {/* <div className="grid">{loggedIn ? loggedInView : unloggedInView}</div> */}
 
       <footer className="footer">
         
