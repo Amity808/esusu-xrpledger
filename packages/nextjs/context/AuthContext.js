@@ -104,6 +104,9 @@ export const AuthContext = ({ children }) => {
         if (web3auth.connected) {
           setProvider(web3auth?.provider);
           setIsAuthenticated(true);
+          localStorage.setItem("isAuthenticated", "true");
+        } else {
+          setIsAuthenticated(false)
         }
         stopLoading();
       } catch (error) {
@@ -111,6 +114,13 @@ export const AuthContext = ({ children }) => {
         console.error(error);
       }
     };
+
+    const storedAuthState = localStorage.getItem("isAuthenticated");
+    if (storedAuthState === "true") {
+      setIsAuthenticated(true);
+    } else {
+      setIsAuthenticated(false);
+    }
     init();
   }, []);
 
@@ -132,6 +142,7 @@ export const AuthContext = ({ children }) => {
       router.push("/");
       setProvider(webauthProvider);
       setIsAuthenticated(true);
+      localStorage.setItem("isAuthenticated", "true");
     } catch (error) {
       console.log(error);
     }
@@ -154,6 +165,7 @@ export const AuthContext = ({ children }) => {
     // localStorage.removeItem('token')
     setIsAuthenticated(false);
     setProvider(null);
+    localStorage.removeItem("isAuthenticated");
   };
   const getBalance = async () => {
     if (!provider) {

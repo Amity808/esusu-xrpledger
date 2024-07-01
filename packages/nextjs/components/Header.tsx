@@ -41,7 +41,7 @@ export const menuLinks: HeaderMenuLink[] = [
 export const HeaderMenuLinks = () => {
   const pathname = usePathname();
 
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, login } = useAuth();
 
   return (
     <>
@@ -64,7 +64,7 @@ export const HeaderMenuLinks = () => {
         );
       })}
       </> : <>
-          <Link href="/login">Login</Link>
+          <button onClick={login}>Login</button>
           </>}
     </>
   );
@@ -76,7 +76,7 @@ export const HeaderMenuLinks = () => {
 export const Header = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const burgerMenuRef = useRef<HTMLDivElement>(null);
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, login } = useAuth();
   useOutsideClick(
     burgerMenuRef,
     useCallback(() => setIsDrawerOpen(false), []),
@@ -130,7 +130,7 @@ export const Header = () => {
         <FaucetButton />
           
           </> : <>
-          <Link href="/login">Login</Link>
+          <button onClick={login}>Login</button>
           </>}
       </div>
     </div>

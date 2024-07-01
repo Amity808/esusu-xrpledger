@@ -8,7 +8,7 @@ const useProtectedRoute = () => {
   const router = useRouter();
 
   useEffect(() => {
-    // if (isAuthenticated === null) return; // Don't do anything if still checking auth state
+    if (isAuthenticated === null) return; // Don't do anything if still checking auth state
     if (!isAuthenticated) {
       router.push('/login');
     }
