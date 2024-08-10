@@ -55,14 +55,14 @@ const { createEscrow } = useAuth()
       console.log(error)
     }
   }
-  return <div className=" flex justify-center items-center">
+  return <div className=" flex justify-center items-center flex-col my-[100px]">
 
     <div>
       Create your escrow payment
     </div>
 
  
-    <form >
+    <form className="items-center flex flex-col mt-[20px] justify-center">
       <div>
       <CustomInput 
             className=" w-[400px] text-black"
