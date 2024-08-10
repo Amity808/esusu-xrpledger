@@ -1,14 +1,19 @@
 'use client'
 
 import React , { useState } from "react";
-import { Client } from "xrpl";
+import { Client, xrpToDrops } from "xrpl";
+import {useAuth} from "~~/context/AuthContext"
+
 
 const CreateEscrow = () => {
   const client = new Client("wss://s.devnet.rippletest.net:51233");
 //   await client.connect()
+const { createEscrow } = useAuth()
+
  const [amount, setAmount] = useState('')
  const [startEscrow, setStartEscrow] = useState('10')
  const [endEscrow, setEndEscrow] = useState('100')
+ const [Destination, setDestination] = useState('')
   const addSeconds = (numOfSeconds, date = new Date()) => {
     date.setSeconds(date.getSeconds() + numOfSeconds);
     date = Math.floor(date / 1000);
@@ -26,7 +31,7 @@ const CreateEscrow = () => {
     const escrowTx = await client.autofill({
       "TransactionType": "EscrowCreate",
       "Account": "rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh", //correct with good address
-      "Amount": amount,
+      "Amount": xrpToDrops(amount),
       "Destination": "",
       "FinishAfter": escrow_finish_date,
       "CancelAfter": escrow_cancel_date
@@ -34,9 +39,16 @@ const CreateEscrow = () => {
 
     // const signed = 
   };
+
+  const initalEscrow = async () => {
+
+  }
   return <div>CreateEscrow
 
     <button onClick={addCreatescrow}>Create</button>
+    <form >
+  <button onClick={initalEscrow}>Create Escrow</button>
+    </form>
   </div>;
 };
 

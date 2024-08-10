@@ -187,8 +187,20 @@ export const AuthContext = ({ children }) => {
     uiConsole("Accpuint info: ", userAccount);
   };
 
+  const createEscrow = async ({destination, cancelTime}) => {
+    if (!provider) {
+      uiConsole("provider not initialized yet");
+      return;
+    }
+
+    const rpc = new RPC(provider);
+    const escrow = await rpc.createEscrow(destination, cancelTime)
+    console.log(escrow)
+    uiConsole("Escrow Created")
+  }
+
   return (
-    <Web3AuthContext.Provider value={{ login, logout, getUserInfo, isAuthenticated, balance, addressXRLedger }}>
+    <Web3AuthContext.Provider value={{ login, logout, getUserInfo, isAuthenticated, balance, addressXRLedger, createEscrow }}>
       {children}
     </Web3AuthContext.Provider>
   );
