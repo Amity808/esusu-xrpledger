@@ -49,13 +49,14 @@ const { createEscrow } = useAuth()
     escrow_cancel_date = addSeconds(parseInt(endEscrow));
     console.log(escrow_finish_date);
     try {
-      const result = await createEscrow(escrow_finish_date, Destination)
+      const result = await createEscrow(escrow_finish_date, Destination, amount)
       console.log(result)
     } catch (error) {
       console.log(error)
     }
   }
-  return <div className=" flex justify-center items-center flex-col my-[100px]">
+  return (
+    <div className=" flex justify-center items-center flex-col my-[100px]">
 
     <div>
       Create your escrow payment
@@ -94,7 +95,8 @@ const { createEscrow } = useAuth()
   
   <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg" onClick={initalEscrow}>Create Escrow</button>
     </form>
-  </div>;
+  </div>
+  )
 };
 
 export default CreateEscrow;

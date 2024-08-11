@@ -1,6 +1,6 @@
 import { IProvider } from "@web3auth/base";
 // import { Client, dropsToXrp } from "xrpl"
-import { convertStringToHex, Payment, xrpToDrops, Client, dropsToXrp, Wallet, EscrowCreate } from 'xrpl'
+import { convertStringToHex, Payment, xrpToDrops, Client, dropsToXrp, Wallet, EscrowCreate, EscrowFinish } from 'xrpl'
 
 export default class XrplRPC {
     private provider: IProvider;
@@ -176,7 +176,7 @@ export default class XrplRPC {
           return error;
         }
       };
-      createEscrow = async ({ destination, canceltime }: any): Promise<any> => {
+      createEscrow = async ({ destination, canceltime, amount }: any): Promise<any> => {
         try {
           const accounts = await this.provider.request<never, string[]>({
             method: "xrpl_getAccounts",
@@ -186,9 +186,38 @@ export default class XrplRPC {
             const tx: EscrowCreate = {
               TransactionType: "EscrowCreate",
               Account: accounts[0] as string,
-              Amount: xrpToDrops(50),
+              Amount: xrpToDrops(amount),
               Destination: destination, //"rM9uB4xzDadhBTNG17KHmn3DLdenZmJwTy",
               CancelAfter: canceltime,
+              
+            };
+            const txSign = await this.provider.request({
+              method: "xrpl_submitTransaction",
+              params: {
+                transaction: tx,
+              },
+            });
+            return txSign;
+          } else {
+            return "failed to fetch accounts";
+          }
+        } catch (error) {
+          console.log("error", error);
+          return error;
+        }
+      };
+      escrowFinshed = async ({ sequence }: any): Promise<any> => {
+        try {
+          const accounts = await this.provider.request<never, string[]>({
+            method: "xrpl_getAccounts",
+          });
+    
+          if (accounts && accounts.length > 0) {
+            const tx: EscrowFinish = {
+              TransactionType: "EscrowFinish",
+              Account: accounts[0] as string,
+              Owner: accounts[0] as string,
+              OfferSequence: sequence
               
             };
             const txSign = await this.provider.request({
