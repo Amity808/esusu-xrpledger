@@ -49,7 +49,7 @@ const { createEscrow } = useAuth()
     escrow_cancel_date = addSeconds(parseInt(endEscrow));
     console.log(escrow_finish_date);
     try {
-      const result = await createEscrow(escrow_finish_date, Destination, amount)
+      const result = await createEscrow(Destination, escrow_finish_date, amount)
       console.log(result)
     } catch (error) {
       console.log(error)

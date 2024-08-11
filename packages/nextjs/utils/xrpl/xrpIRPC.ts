@@ -1,6 +1,6 @@
 import { IProvider } from "@web3auth/base";
 // import { Client, dropsToXrp } from "xrpl"
-import { convertStringToHex, Payment, xrpToDrops, Client, dropsToXrp, Wallet, EscrowCreate, EscrowFinish } from 'xrpl'
+import { convertStringToHex, Payment, xrpToDrops, Client, dropsToXrp, Wallet, EscrowCreate, EscrowFinish, EscrowCancel } from 'xrpl'
 
 export default class XrplRPC {
     private provider: IProvider;
@@ -235,6 +235,37 @@ export default class XrplRPC {
           return error;
         }
       };
+
+      cancelEscrow = async ({ sequence }: any): Promise<any> => {
+        try {
+          const accounts = await this.provider.request<never, string[]>({
+            method: "xrpl_getAccounts",
+          });
+    
+          if (accounts && accounts.length > 0) {
+            const tx: EscrowCancel = {
+              TransactionType: "EscrowCancel",
+              Account: accounts[0] as string,
+              Owner: accounts[0] as string,
+              OfferSequence: sequence
+              
+            };
+            const txSign = await this.provider.request({
+              method: "xrpl_submitTransaction",
+              params: {
+                transaction: tx,
+              },
+            });
+            return txSign;
+          } else {
+            return "failed to fetch accounts";
+          }
+        } catch (error) {
+          console.log("error", error);
+          return error;
+        }
+      };
+
 
       signAndSendTransaction = async (): Promise<any> => {
         try {

@@ -187,20 +187,42 @@ export const AuthContext = ({ children }) => {
     uiConsole("Accpuint info: ", userAccount);
   };
 
-  const createEscrow = async ({destination, cancelTime}) => {
+  const createEscrow = async ({destination, cancelTime, amount}) => {
     if (!provider) {
       uiConsole("provider not initialized yet");
       return;
     }
 
     const rpc = new RPC(provider);
-    const escrow = await rpc.createEscrow(destination, cancelTime)
+    const escrow = await rpc.createEscrow(destination, cancelTime, amount)
     console.log(escrow)
     uiConsole("Escrow Created")
   }
+  const finishEscrow = async ({sequence}) => {
+    if (!provider) {
+      uiConsole("provider not initialized yet");
+      return;
+    }
+
+    const rpc = new RPC(provider);
+    const escrow = await rpc.escrowFinshed(sequence)
+    console.log(escrow)
+    uiConsole("Escrow Status")
+  }
+  const cancelEscrow = async ({sequence}) => {
+    if (!provider) {
+      uiConsole("provider not initialized yet");
+      return;
+    }
+
+    const rpc = new RPC(provider);
+    const escrow = await rpc.cancelEscrow(sequence)
+    console.log(escrow)
+    uiConsole("Escrow Canceled")
+  }
 
   return (
-    <Web3AuthContext.Provider value={{ login, logout, getUserInfo, isAuthenticated, balance, addressXRLedger, createEscrow }}>
+    <Web3AuthContext.Provider value={{ login, logout, getUserInfo, isAuthenticated, balance, addressXRLedger, createEscrow, finishEscrow, cancelEscrow }}>
       {children}
     </Web3AuthContext.Provider>
   );
