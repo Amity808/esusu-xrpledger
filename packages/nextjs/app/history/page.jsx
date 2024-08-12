@@ -1,12 +1,13 @@
 "use client"
 import React from 'react'
 import bg from "../../public/homebg.png";
-import Navbar from "../../components/Navbar"
-// import Trasactionhistory from "../../components/Trasactionhistory"
-import HistoryCard from '../../components/HistoryCard';
+// import Navbar from "../../components/Navbar"
+// // import Trasactionhistory from "../../components/Trasactionhistory"
+// import HistoryCard from '../../components/HistoryCard';
 import AllTxHistory from '../../components/AllTxHistory';
 import AuthMiddleware from '~~/middleware/Auth';
 import useProtectedRoute from '~~/hooks/auth/useProtectedRoute';
+import {useAuth} from "~~/context/AuthContext"
 
 const History = () => {
   useProtectedRoute();
@@ -29,9 +30,14 @@ const History = () => {
   return (
     <AuthMiddleware>
 
-    <div style={headerStyle} className=''>
+    <div style={headerStyle} className=' h-screen'>
         
-        <AllTxHistory />
+       <div>
+       <AllTxHistory />
+       <h3>Escrow Status</h3>
+
+       </div>
+
     </div>
     </AuthMiddleware>
   )

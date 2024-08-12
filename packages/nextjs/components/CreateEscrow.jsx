@@ -4,9 +4,11 @@ import React , { useState } from "react";
 import { Client, xrpToDrops } from "xrpl";
 import {useAuth} from "~~/context/AuthContext"
 import CustomInput from "./ui/CustomeInput";
-
+import AuthMiddleware from '~~/middleware/Auth';
+import useProtectedRoute from '~~/hooks/auth/useProtectedRoute';
 
 const CreateEscrow = () => {
+  useProtectedRoute();
   const client = new Client("wss://s.devnet.rippletest.net:51233");
 //   await client.connect()
 const { createEscrow } = useAuth()
@@ -56,6 +58,8 @@ const { createEscrow } = useAuth()
     }
   }
   return (
+    <AuthMiddleware>
+
     <div className=" flex justify-center items-center flex-col my-[100px]">
 
     <div>
@@ -96,6 +100,7 @@ const { createEscrow } = useAuth()
   <button className="btn btn-xs sm:btn-sm md:btn-md lg:btn-lg" onClick={initalEscrow}>Create Escrow</button>
     </form>
   </div>
+    </AuthMiddleware>
   )
 };
 

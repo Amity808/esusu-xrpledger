@@ -23,6 +23,6 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/childsavings/deposit/page.jsx", "hooks/scaffold-eth/useDeployedContractInfo.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/childsavings/deposit/page.jsx", "hooks/scaffold-eth/useDeployedContractInfo.js", "components/EscrowHistory.jsx"],
   "exclude": ["node_modules"]
 }
