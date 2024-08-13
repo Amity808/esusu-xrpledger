@@ -30,11 +30,11 @@ export default function EscrowHistory() {
       <div>
         <div>
           <h2>Input your escrow sequence to check your escrow status</h2>
-          <input type="text" placeholder="Finish Escrow" onChange={() => setFininshSequence(e.target.value)} className="input input-bordered w-full max-w-xs" />
+          <input type="text" onClick={finishEscrowStatus} placeholder="Finish Escrow" onChange={() => setFininshSequence(e.target.value)} className="input input-bordered w-full max-w-xs" />
         </div>
         <div>
           <h2>Input your escrow sequence to cancel your escrow</h2>
-          <input type="text" placeholder="Cancel Escrow" onChange={() => setSequence(e.target.value)} className="input input-bordered w-full max-w-xs" />
+          <input type="text" placeholder="Cancel Escrow" onClick={cancelEscrowS} onChange={() => setSequence(e.target.value)} className="input input-bordered w-full max-w-xs" />
         </div>
       </div>
     </div>

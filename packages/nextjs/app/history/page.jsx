@@ -8,6 +8,7 @@ import AllTxHistory from '../../components/AllTxHistory';
 import AuthMiddleware from '~~/middleware/Auth';
 import useProtectedRoute from '~~/hooks/auth/useProtectedRoute';
 import {useAuth} from "~~/context/AuthContext"
+import EscrowHistory from '~~/components/EscrowHistory';
 
 const History = () => {
   useProtectedRoute();
@@ -34,10 +35,10 @@ const History = () => {
         
        <div>
        <AllTxHistory />
-       <h3>Escrow Status</h3>
 
        </div>
-
+       <h3>Escrow Status</h3>
+    <EscrowHistory />
     </div>
     </AuthMiddleware>
   )
